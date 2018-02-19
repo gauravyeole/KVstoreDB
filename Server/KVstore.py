@@ -1,7 +1,10 @@
 # Key-Value database get, put and delete implementation
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+from Server.DataBaseAbstract import DataBaseAbstract
+
 
 class KVstore(DataBaseAbstract):
+
     def __init__(self):
         self.kvstore = dict()
 
@@ -10,7 +13,7 @@ class KVstore(DataBaseAbstract):
 
     def put(self, key, value):
         self.kvstore[key] = value
-        if(self.kvstore[key] == None):
+        if self.kvstore[key] is None:
             return False
         return True
 
@@ -19,5 +22,6 @@ class KVstore(DataBaseAbstract):
 
     def delete(self, key):
         removed_val = self.kvstore.pop(key, None)
-        if(removed_val == None):
+        if removed_val is None:
             return False
+        return True
