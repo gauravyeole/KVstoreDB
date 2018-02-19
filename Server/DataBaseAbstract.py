@@ -3,8 +3,8 @@
 
 from abc import ABCMeta, abstractmethod
 
-class DataBaseAbstract(Object):
 
+class DataBaseAbstract(object):
     __metaclass__ = ABCMeta
 
     def __init__(self):

@@ -1,6 +1,7 @@
 # Key-Value database get, put and delete implementation
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
-from Server.DataBaseAbstract import DataBaseAbstract
+
+from DataBaseAbstract import DataBaseAbstract
 
 
 class KVstore(DataBaseAbstract):
