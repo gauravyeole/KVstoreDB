@@ -53,7 +53,7 @@ class FileStore():
     def get_file_as_string(self, file_name):
         data = ""
         with open(file_name, 'r') as f:
-            data = f.read().replace('\n', '')
+            data = f.read()
         return data
 
     def get_key(self, file_name, block_no):
