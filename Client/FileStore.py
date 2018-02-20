@@ -2,7 +2,7 @@
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 import hashlib
-from KVstore import KVstore
+from Server.KVstore import KVstore
 
 
 class FileStore():

@@ -1,10 +1,13 @@
 # Custom hierarchiecal File System Interface akin to UNIX file system
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
+from Client.DirectoryInode import DirectoryInode
+
+
 class FileSystem():
 
     def __init__:
-        self.root = DiretoryInode("/")
+        self.root = DirectoryInode("/")
 
     def mkdir(self, dir):
         pass
