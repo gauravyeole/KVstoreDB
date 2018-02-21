@@ -30,6 +30,15 @@ class Inode():
         blk_num = self.index_to_block_number(index)
         return blk_num
 
+    # Returns true if child is sucessfully added
+    def add_child(self, filename, inode_number):
+        if filename in self.directory:
+            print("Directory already Exists!!!")
+            return False
+        self.directory[filename] = inode_number
+        return True
+
+
 
 
 

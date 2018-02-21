@@ -41,7 +41,7 @@ class InodeNumberLayer:
         blk_num = inode.offset_to_blk_num(offset)
         return self.blocks.blk_number_to_data(blk_num)
 
-    # Adds no entry in inode table and returns inode number upon success
+    # Adds new entry in inode table and returns inode number upon success
     def add_inode_table_entry(self, inode):
         for i in range(0 , MAX_NUM_INODES):
             if self.inode_table[i] is None:
