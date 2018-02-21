@@ -18,6 +18,10 @@ class InodeNumberLayer:
         self.blocks = BlockLayer(num_of_blks)
         for i in range(0, self.MAX_NUM_INODES):
             self.inode_table[i] = None
+        root = Inode()
+        root.type = 1
+        self.inode_table[0] = root
+
 
     def inode_number_to_inode(self, inode_number):
         return self.inode_table.pop(inode_number, None)
