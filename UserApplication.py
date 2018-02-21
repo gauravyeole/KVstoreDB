@@ -1,3 +1,6 @@
+# Sample User Client-side Application utilizing the Server API
+# @author: Gaurav Yeole <gauravyeole@gmail.com>
+
 from Client.FileStore import FileStore
 
 
