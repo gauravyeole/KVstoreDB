@@ -18,7 +18,7 @@ class FileSystem():
             parent_path = get_parent(path)
             parent_inode = self.file_system.abs_path_to_inode(parent_path)
             if parent_inode is not None:
-                return parent_inode.add_child(first(rest(path)), new_inode_number)
+                return parent_inode.add_child(path.split('/')[-1], new_inode_number)
         print("New Directory cannot be created. File System Full!!!")
         return False
 
@@ -40,7 +40,7 @@ class FileSystem():
             parent_path = get_parent(path)
             parent_inode = self.file_system.abs_path_to_inode(parent_path)
             if parent_inode is not None:
-                return parent_inode.add_child(first(rest(path)), new_inode_number)
+                return parent_inode.add_child(path.split('/')[-1]), new_inode_number)
         print("New Directory cannot be created. File System Full!!!")
         return False
 
