@@ -10,7 +10,9 @@ def main():
 
     print ("MKDIR Success:" + str(myFileSystem.mkdir("/abc")))
     print(str(myFileSystem.mkdir("/abc/pqr")))
-    # file_name = "test.txt"
+    myFileSystem.mkdir("/xyz")
+    print("create test: " + str(myFileSystem.mkdir("/xyz.txt")))
+    file_name = "test.txt"
     # myDatabase.put_file(file_name)
     # print (myDatabase.get_file(file_name))
 

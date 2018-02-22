@@ -30,7 +30,7 @@ class InodeNumberLayer:
 
 
     def inode_number_to_inode(self, inode_number):
-        return self.inode_table.pop(inode_number, None)
+        return self.inode_table[inode_number]
 
     # returns the the block number (key in database)where offset lies
     def inode_number_to_block(self, offset, inode_number):
@@ -49,7 +49,9 @@ class InodeNumberLayer:
 
     # Adds new entry in inode table and returns inode number upon success
     def add_inode_table_entry(self, inode):
+        print("Inode Table: " + str(self.inode_table))
         for i in range(0 , MAX_NUM_INODES):
+            print("i is " + str(i))
             if self.inode_table[i] is None:
                 self.inode_table[i] = inode
                 return i

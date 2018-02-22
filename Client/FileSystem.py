@@ -12,8 +12,7 @@ class FileSystem():
         self.file_system = AbsPathNameLayer()
 
     def mkdir(self, path):
-        new_inode = Inode()
-        new_inode.type = 1
+        new_inode = Inode(1)
         new_inode_number = self.file_system.add_inode_table_entry(new_inode)
         if new_inode_number is not -1:
             parent_path = get_parent(path)
@@ -33,9 +32,10 @@ class FileSystem():
         pass
 
     def create(self, path):
-        new_inode = Inode()
-        new_inode.type = 0
+        new_inode = Inode(0)
+        print("FileSystem: inode is " + str(new_inode))
         new_inode_number = self.file_system.add_inode_table_entry(new_inode)
+        print("File System: new inode num: " + str(new_inode_number))
         if new_inode_number is not -1:
             parent_path = get_parent(path)
             parent_inode = self.file_system.abs_path_to_inode(parent_path)

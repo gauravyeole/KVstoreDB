@@ -9,7 +9,7 @@ MAX_BLK_SIZE = config.MAX_BLK_SIZE
 
 class Inode():
 
-    def __init__(self):
+    def __init__(self, type):
         self.time_created = datetime.datetime.now()
         self.time_accessed = datetime.datetime.now()
         self.time_modified = datetime.datetime.now()
@@ -17,7 +17,7 @@ class Inode():
         self.blk_numbers = dict() # dictionaty indexed by index of blk of data and mapping to blk_number
         self.size = 0
         self.no_links = 2
-        self.type = 0 # 0 - file, and 1 - directory
+        self.type = type # 0 - file, and 1 - directory
         self.directory = dict() # directory is dictionary indexed by file name and mapping to inode number
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Inode():
     # Returns true if child is sucessfully added
     def add_child(self, filename, inode_number):
         if filename in self.directory:
-            print("Directory already Exists!!!")
+            print("File/Directory already Exists!!!")
             return False
         self.directory[filename] = inode_number
         return True
