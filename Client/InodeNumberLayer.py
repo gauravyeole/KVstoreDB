@@ -16,11 +16,17 @@ class InodeNumberLayer:
     def __init__(self):
         self.inode_table = dict()
         self.blocks = BlockLayer(num_of_blks)
-        for i in range(0, self.MAX_NUM_INODES):
+        for i in range(0, MAX_NUM_INODES):
             self.inode_table[i] = None
         root = Inode()
         root.type = 1
         self.inode_table[0] = root
+
+    def __str__(self):
+        string = ""
+        for inode in self.inode_table:
+            string = string + "[" + str(inode) + ": " + str(self.inode_table[inode]) + "]; "
+        return string
 
 
     def inode_number_to_inode(self, inode_number):

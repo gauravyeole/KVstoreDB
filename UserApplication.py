@@ -2,14 +2,17 @@
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 from Client.FileStore import FileStore
+from Client.FileSystem import FileSystem
 
 
 def main():
-    myDatabase = FileStore()
+    myFileSystem = FileSystem()
 
-    file_name = "test.txt"
-    myDatabase.put_file(file_name)
-    print (myDatabase.get_file(file_name))
+    print ("MKDIR Success:" + str(myFileSystem.mkdir("/abc")))
+    print(str(myFileSystem.mkdir("/abc/pqr")))
+    # file_name = "test.txt"
+    # myDatabase.put_file(file_name)
+    # print (myDatabase.get_file(file_name))
 
 
 if __name__ == "__main__":

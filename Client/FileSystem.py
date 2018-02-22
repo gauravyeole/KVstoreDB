@@ -3,7 +3,7 @@
 
 from Client.AbsPathNameLayer import AbsPathNameLayer
 from Client.Inode import Inode
-from Client.PathNameLayer import rest, first
+from Client.PathNameLayer import rest, first, get_parent
 
 
 class FileSystem():
@@ -14,12 +14,12 @@ class FileSystem():
     def mkdir(self, path):
         new_inode = Inode()
         new_inode.type = 1
-        new_inode_number = self.file_system.add_inode_table_entry()
+        new_inode_number = self.file_system.add_inode_table_entry(new_inode)
         if new_inode_number is not -1:
-            parent_path = rest(path)
+            parent_path = get_parent(path)
             parent_inode = self.file_system.abs_path_to_inode(parent_path)
             if parent_inode is not None:
-                return parent_inode.add_child(first(path), new_inode_number)
+                return parent_inode.add_child(first(rest(path)), new_inode_number)
         print("New Directory cannot be created. File System Full!!!")
         return False
 
@@ -32,8 +32,17 @@ class FileSystem():
     def delete(self, abs_path):
         pass
 
-    def create(self, abs_path):
-        pass
+    def create(self, path):
+        new_inode = Inode()
+        new_inode.type = 0
+        new_inode_number = self.file_system.add_inode_table_entry(new_inode)
+        if new_inode_number is not -1:
+            parent_path = get_parent(path)
+            parent_inode = self.file_system.abs_path_to_inode(parent_path)
+            if parent_inode is not None:
+                return parent_inode.add_child(first(rest(path)), new_inode_number)
+        print("New Directory cannot be created. File System Full!!!")
+        return False
 
     def write(self, abs_path, data):
         pass
@@ -42,7 +51,9 @@ class FileSystem():
         pass
 
     def rmdir(self, path):
-        pass
+        parent_path = get_parent(path)
+        parent_inode = self.file_system.abs_path_to_inode(parent_path)
+
 
     def rename(self, source, destination):
         pass

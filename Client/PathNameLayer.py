@@ -5,11 +5,19 @@ from Client.FileNameLayer import FileNameLayer
 
 
 def first(path):
-    return path.split('/')[-1]
+    if path.split('/')[0] is '':
+        return "/"
+    return path.split('/')[0]
+
+
+def get_parent(path):
+    if '/'.join((path.split('/')[:-1])) is '':
+        return "/"
+    return '/'.join((path.split('/')[:-1]))
 
 
 def rest(path):
-    return '/'.join((path.split('/')[:-1]))
+    return '/'.join((path.split('/')[1:]))
 
 
 class PathNameLayer():
@@ -19,8 +27,11 @@ class PathNameLayer():
         self.inode_table = self.file_name_layer.inode_table
 
     def path_to_inode_number(self, path, dir):
+        if dir is None:
+            print("Invalid path, Operation can not complete")
+            return None
         if '/' not in path:
-            self.file_name_layer.name_to_inode_number(path, dir)
+            return self.file_name_layer.name_to_inode_number(path, dir)
         else:
             dir = self.file_name_layer.lookup(first(path), dir)
             path = rest(path)
@@ -28,4 +39,3 @@ class PathNameLayer():
 
     def add_inode_table_entry(self, inode):
         return self.file_name_layer.add_inode_table_entry(inode)
-

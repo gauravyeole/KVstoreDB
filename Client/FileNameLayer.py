@@ -12,6 +12,7 @@ class FileNameLayer():
         self.inode_number_layer = InodeNumberLayer()
         self.inode_table = self.inode_number_layer.inode_table
 
+    #lookup returns the inode number
     def lookup(self, filename, dir): # dir is inode number of the directory
         inode = self.inode_number_layer.inode_number_to_inode(dir)
         if inode.type is 0:
@@ -21,7 +22,6 @@ class FileNameLayer():
             return inode.directory[filename]
         print("Lookup Failure")
         return None
-
 
     def name_to_inode_number(self, filename, dir):
         return self.lookup(filename, dir)
