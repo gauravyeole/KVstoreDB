@@ -43,7 +43,7 @@ class Inode():
         self.directory[filename] = inode_number
         return True
 
-    def remove_child(self, filename, inode_number):
+    def remove_child(self, filename):
         if filename not in self.directory:
             print("File/Directory does not exist")
             return False

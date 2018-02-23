@@ -102,3 +102,10 @@ class InodeNumberLayer:
 
     def remove_inode_table_entry(self, inode_number):
         self.inode_table[inode_number] = None
+
+    def remove_file(self, inode_number):
+        inode = self.inode_number_to_inode(inode_number)
+        for k, val in inode.blk_numbers.items():
+            self.blocks.invalid_blk(val)
+        self.remove_inode_table_entry(inode_number)
+        return True

@@ -35,3 +35,8 @@ class FileNameLayer():
     def add_inode_table_entry(self, inode):
         return self.inode_number_layer.add_inode_table_entry(inode)
 
+    def remove_inode_table_entry(self, inode_number):
+        return self.inode_number_layer.remove_inode_table_entry(inode_number)
+
+    def remove_file(self, inode_number):
+        return self.inode_number_layer.read_file(inode_number)

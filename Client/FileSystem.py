@@ -50,7 +50,7 @@ class FileSystem():
         pass
 
     def remove(self, path):
-        pass
+        return self.file_system.remove_file(path)
 
     def rename(self, source, destination):
         pass

@@ -40,9 +40,15 @@ class PathNameLayer():
     def add_inode_table_entry(self, inode):
         return self.file_name_layer.add_inode_table_entry(inode)
 
+    def remove_inode_table_entry(self, inode_number):
+        return self.file_name_layer.remove_inode_table_entry(inode_number)
+
     def write_to_file(self, inode_number, offset, data):
         return self.file_name_layer.write_to_file(inode_number, offset, data)
 
     def read_file(self, inode_number, offset, size):
         return self.file_name_layer.read_file(inode_number, offset, size)
+
+    def remove_file(self, inode_number):
+        return self.file_name_layer.remove_file(inode_number)
 
