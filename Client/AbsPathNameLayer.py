@@ -1,6 +1,7 @@
 # Absolute path name layer implementation - enables hierarchical file
 # structure with root("/") as the root of tree
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+import copy
 
 from Client.PathNameLayer import PathNameLayer, get_parent
 
@@ -55,4 +56,24 @@ class AbsPathNameLayer():
         parent_inode.remove_child(abs_path.split('/')[-1])
         self.path_name_layer.remove_file(inode_number)
         return
+
+    def remove_dir(self, abs_path):
+        inode_number = self.abs_path_to_inode_number(abs_path)
+        inode = self.abs_path_to_inode(abs_path)
+        parent_path = get_parent(abs_path)
+        parent_inode = self.abs_path_to_inode(parent_path)
+        children = copy.deepcopy(inode.get_children())
+        for k, val in children.items():
+            child_inode = self.inode_table[val]
+            if child_inode.type is 0:
+                self.remove_file(abs_path + "/" + k)
+            else:
+                self.remove_dir(abs_path + "/" + k)
+        self.inode_table[inode_number] = None
+        parent_inode.remove_child(abs_path.split('/')[-1])
+        return
+
+
+
+
 

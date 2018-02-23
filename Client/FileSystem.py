@@ -47,7 +47,7 @@ class FileSystem():
         return self.file_system.read_file(abs_path, offset, size)
 
     def rmdir(self, path):
-        pass
+        return self.file_system.remove_dir(path)
 
     def remove(self, path):
         return self.file_system.remove_file(path)

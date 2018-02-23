@@ -60,6 +60,9 @@ class Inode():
                 "time_modified" : self.time_modified}
         return attr
 
+    def get_children(self):
+        return self.directory
+
 
 
 

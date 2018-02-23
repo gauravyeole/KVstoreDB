@@ -11,9 +11,9 @@ def main():
     print ("MKDIR Success:" + str(myFileSystem.mkdir("/abc")))
     print(str(myFileSystem.mkdir("/abc/pqr")))
     myFileSystem.create("/xyz")
-    myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 0)
-    myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 5)
-    data = myFileSystem.remove("/xyz")
+    # myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 0)
+    # myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 5)
+    data = myFileSystem.rmdir("/abc")
     print(data)
     # print("create test: " + str(myFileSystem.mkdir("/xyz.txt")))
     file_name = "test.txt"
