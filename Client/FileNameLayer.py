@@ -26,6 +26,9 @@ class FileNameLayer():
     def name_to_inode_number(self, filename, dir):
         return self.lookup(filename, dir)
 
+    def write_to_file(self, inode_number, offset, data):
+        return self.inode_number_layer.write_to_file(inode_number, offset, data)
+
     def add_inode_table_entry(self, inode):
         return self.inode_number_layer.add_inode_table_entry(inode)
 

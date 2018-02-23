@@ -14,7 +14,7 @@ class Inode():
         self.time_accessed = datetime.datetime.now()
         self.time_modified = datetime.datetime.now()
         # self.path = path
-        self.blk_numbers = dict() # dictionaty indexed by index of blk of data and mapping to blk_number
+        self.blk_numbers = list() # list of block numbers of data
         self.size = 0
         self.no_links = 2
         self.type = type # 0 - file, and 1 - directory
@@ -27,7 +27,7 @@ class Inode():
 
     # Returns the block number of the indexth block of file
     def index_to_block_number(self, index):
-        return self.blk_numbers.pop(index, None)
+        return self.blk_numbers[index]
 
     # Returns the blk_number from offset
     def offset_to_blk_num(self, offset):
@@ -45,11 +45,20 @@ class Inode():
 
     def remove_child(self, filename, inode_number):
         if filename not in self.directory:
-            print("File/Directory does not exixst")
+            print("File/Directory does not exist")
             return False
         self.directory[filename] = None
         return True
 
+    def update_blk_number(self, blk_index, blk_number):
+        self.blk_numbers[blk_index] = blk_number
+
+    def get_attributes(self):
+        attr = {"type": self.type, "children" : self.directory, "size" : self.size,
+                "block_numbers" : self.blk_numbers, "links" : self.no_links,
+                "time_created" : self.time_created, "time_accessed" : self.time_accessed,
+                "time_modified" : self.time_modified}
+        return attr
 
 
 

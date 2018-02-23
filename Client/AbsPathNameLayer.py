@@ -10,6 +10,7 @@ class AbsPathNameLayer():
     def __init__(self):
         self.path_name_layer = PathNameLayer()
         self.inode_table = self.path_name_layer.inode_table
+        self.blocks = self.path_name_layer.blocks
 
     def __str__(self):
         string = ""
@@ -36,3 +37,7 @@ class AbsPathNameLayer():
 
     def add_inode_table_entry(self, inode):
         return self.path_name_layer.add_inode_table_entry(inode)
+
+    def write_to_file(self, abs_path, offset, data):
+        inode_number = self.abs_path_to_inode_number(abs_path)
+        return self.path_name_layer.write_to_file(inode_number, offset, data)

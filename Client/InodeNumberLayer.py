@@ -24,7 +24,8 @@ class InodeNumberLayer:
     def __str__(self):
         string = ""
         for inode in self.inode_table:
-            string = string + "[" + str(inode) + ": " + str(self.inode_table[inode]) + "]; "
+            string = string + "[" + str(inode) + ": " + \
+                     str(self.inode_table[inode]) + "]; "
         return string
 
 
@@ -45,6 +46,37 @@ class InodeNumberLayer:
     def offset_to_blk_data(self, offset, inode): # inode_to_blk
         blk_num = inode.offset_to_blk_num(offset)
         return self.blocks.blk_number_to_data(blk_num)
+
+    # def blk_number_to_blk_data(self, blk_number):
+    #     return self.blocks.blk_number_to_data(blk_number)
+
+    def write_to_file(self, inode_number, offset, data):
+        inode = self.inode_number_to_inode(inode_number)
+        if inode is not None and inode.type is 0:
+            if offset is 0:
+                blocks = [data[start:start + MAX_BLK_SIZE] for start in
+                          xrange(0, len(data), MAX_BLK_SIZE)]
+                last_blk_index = 0
+            else:
+                last_blk_index = offset/MAX_BLK_SIZE
+                last_blk_data = self.offset_to_blk_data(offset, inode)
+                for i in range(last_blk_index, len(inode.blk_numbers)):
+                    self.blocks.invalid_blk(inode.blk_numbers.pop(i))
+                last_blk_data = last_blk_data[:offset%MAX_BLK_SIZE] + \
+                                data[:MAX_BLK_SIZE-offset%MAX_BLK_SIZE]
+                data = last_blk_data + data[MAX_BLK_SIZE-offset%MAX_BLK_SIZE:]
+                blocks = [data[start:start + MAX_BLK_SIZE] for start in
+                          xrange(0, len(data), MAX_BLK_SIZE)]
+            for i in range(0, len(blocks)):
+                blk_index = last_blk_index + i
+                blk_number = self.blocks.store_data(blocks[blk_index])
+                if blk_number is -1:
+                    return False
+                inode.update_blk_number(blk_index, blk_number)
+            return True
+        else:
+            print("File does not exists...")
+            return False
 
     # Adds new entry in inode table and returns inode number upon success
     def add_inode_table_entry(self, inode):
