@@ -43,7 +43,7 @@ class FileSystem():
     def write(self, path, data, offset=0):
         return self.file_system.write_to_file(path, offset, data)
 
-    def read(self, abs_path, size, offset=0):
+    def read(self, abs_path, offset=0, size=-1):
         return self.file_system.read_file(abs_path, offset, size)
 
     def rmdir(self, path):

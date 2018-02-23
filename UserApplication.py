@@ -11,8 +11,10 @@ def main():
     print ("MKDIR Success:" + str(myFileSystem.mkdir("/abc")))
     print(str(myFileSystem.mkdir("/abc/pqr")))
     myFileSystem.create("/xyz")
-    myFileSystem.write("/xyz", 0, "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ")
-    myFileSystem.write("/xyz", 5, "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ")
+    myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 0)
+    myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 5)
+    data = myFileSystem.remove("/xyz")
+    print(data)
     # print("create test: " + str(myFileSystem.mkdir("/xyz.txt")))
     file_name = "test.txt"
     # myDatabase.put_file(file_name)

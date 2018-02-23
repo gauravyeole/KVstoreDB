@@ -47,7 +47,7 @@ class Inode():
         if filename not in self.directory:
             print("File/Directory does not exist")
             return False
-        self.directory[filename] = None
+        self.directory.pop(filename)
         return True
 
     def update_blk_number(self, blk_index, blk_number):

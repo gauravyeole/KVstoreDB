@@ -30,7 +30,7 @@ class FileNameLayer():
         return self.inode_number_layer.write_to_file(inode_number, offset, data)
 
     def read_file(self, inode_number, size, offset):
-        return self.inode_number_layer.read_file(inode_number, size, offset)
+        return self.inode_number_layer.read_file(inode_number, offset, size)
 
     def add_inode_table_entry(self, inode):
         return self.inode_number_layer.add_inode_table_entry(inode)
@@ -39,4 +39,4 @@ class FileNameLayer():
         return self.inode_number_layer.remove_inode_table_entry(inode_number)
 
     def remove_file(self, inode_number):
-        return self.inode_number_layer.read_file(inode_number)
+        return self.inode_number_layer.remove_file(inode_number)

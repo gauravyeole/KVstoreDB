@@ -73,6 +73,7 @@ class InodeNumberLayer:
                 if blk_number is -1:
                     return False
                 inode.update_blk_number(blk_index, blk_number)
+            inode.size = len(inode.blk_numbers)*MAX_BLK_SIZE
             return True
         else:
             print("File does not exists...")
@@ -80,6 +81,8 @@ class InodeNumberLayer:
 
     def read_file(self, inode_number, size, offset):
         inode = self.inode_number_to_inode(inode_number)
+        if size is -1:
+            size = inode.size
         first_block_index = int(offset/MAX_BLK_SIZE)
         last_block_index = int((offset+size)/MAX_BLK_SIZE)
         string = ""

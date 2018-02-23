@@ -50,8 +50,9 @@ class AbsPathNameLayer():
 
     def remove_file(self, abs_path):
         parent_path = get_parent(abs_path)
+        inode_number = self.abs_path_to_inode_number(abs_path)
         parent_inode = self.abs_path_to_inode(parent_path)
         parent_inode.remove_child(abs_path.split('/')[-1])
-        inode_number = self.abs_path_to_inode_number(abs_path)
         self.path_name_layer.remove_file(inode_number)
         return
+
