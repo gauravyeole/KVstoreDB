@@ -17,3 +17,6 @@ class KVstore:
 
     def delete(self, key):
         pass
+
+    def count(self):
+        pass

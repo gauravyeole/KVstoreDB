@@ -1,7 +1,7 @@
 # Key-Value database get, put and delete implementation
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
-from DataBaseAbstract import DataBaseAbstract
+from Server.DataBaseAbstract import DataBaseAbstract
 
 
 class KVstore(DataBaseAbstract):
@@ -26,3 +26,6 @@ class KVstore(DataBaseAbstract):
         if removed_val is None:
             return False
         return True
+
+    def count(self):
+        return len(self.kvstore)

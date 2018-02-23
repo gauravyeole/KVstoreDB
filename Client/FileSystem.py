@@ -2,8 +2,7 @@
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 from Client.AbsPathNameLayer import AbsPathNameLayer
-from Client.Inode import Inode
-from Client.PathNameLayer import get_parent
+
 
 #TODO: update timestamps
 class FileSystem():
