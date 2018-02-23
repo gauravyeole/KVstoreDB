@@ -10,7 +10,6 @@ class AbsPathNameLayer():
     def __init__(self):
         self.path_name_layer = PathNameLayer()
         self.inode_table = self.path_name_layer.inode_table
-        self.blocks = self.path_name_layer.blocks
 
     def __str__(self):
         string = ""
@@ -20,7 +19,6 @@ class AbsPathNameLayer():
 
     # wd is inode number of working directory
     def abs_path_to_inode_number(self, path, wd=0):
-        print("AbsPathNameLayer: path argument: " + path[1:] + " and, wd " + str(wd))
         inode_number =  self.path_name_layer.path_to_inode_number(path[1:], wd)
         if inode_number is not None:
             return inode_number
@@ -40,4 +38,9 @@ class AbsPathNameLayer():
 
     def write_to_file(self, abs_path, offset, data):
         inode_number = self.abs_path_to_inode_number(abs_path)
-        return self.path_name_layer.write_to_file(inode_number, offset, data)
+        status = self.path_name_layer.write_to_file(inode_number, offset, data)
+        return status
+
+    def read_file(self, abs_path, offset, size):
+        inode_number = self.abs_path_to_inode_number(abs_path)
+        return self.path_name_layer.read_file(inode_number, offset, size)

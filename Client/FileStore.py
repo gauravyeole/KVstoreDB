@@ -17,7 +17,7 @@ class FileStore():
     def put_file(self, file_name):
         file_data = self.get_file_as_string(file_name)
         blocks = [file_data[start:start + self.MAX_VALUE_SIZE] for start in
-                  xrange(0, len(file_data), self.MAX_VALUE_SIZE)]
+                  range(0, len(file_data), self.MAX_VALUE_SIZE)]
         for i in range(0, len(blocks)):
             val = blocks[i]
             key = self.get_key(file_name, i)

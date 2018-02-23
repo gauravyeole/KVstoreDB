@@ -55,10 +55,10 @@ class InodeNumberLayer:
         if inode is not None and inode.type is 0:
             if offset is 0:
                 blocks = [data[start:start + MAX_BLK_SIZE] for start in
-                          xrange(0, len(data), MAX_BLK_SIZE)]
+                          range(0, len(data), MAX_BLK_SIZE)]
                 last_blk_index = 0
             else:
-                last_blk_index = offset/MAX_BLK_SIZE
+                last_blk_index = int(offset/MAX_BLK_SIZE)
                 last_blk_data = self.offset_to_blk_data(offset, inode)
                 for i in range(last_blk_index, len(inode.blk_numbers)):
                     self.blocks.invalid_blk(inode.blk_numbers.pop(i))
@@ -66,7 +66,7 @@ class InodeNumberLayer:
                                 data[:MAX_BLK_SIZE-offset%MAX_BLK_SIZE]
                 data = last_blk_data + data[MAX_BLK_SIZE-offset%MAX_BLK_SIZE:]
                 blocks = [data[start:start + MAX_BLK_SIZE] for start in
-                          xrange(0, len(data), MAX_BLK_SIZE)]
+                          range(0, len(data), MAX_BLK_SIZE)]
             for i in range(0, len(blocks)):
                 blk_index = last_blk_index + i
                 blk_number = self.blocks.store_data(blocks[blk_index])
@@ -78,11 +78,22 @@ class InodeNumberLayer:
             print("File does not exists...")
             return False
 
+    def read_file(self, inode_number, size, offset):
+        inode = self.inode_number_to_inode(inode_number)
+        first_block_index = int(offset/MAX_BLK_SIZE)
+        last_block_index = int((offset+size)/MAX_BLK_SIZE)
+        string = ""
+        try:
+            blks = range(first_block_index, last_block_index)
+            for i in blks:
+                string = string + self.blocks.blk_number_to_data(inode.blk_numbers[i])
+            return string
+        except KeyError:
+            print("Invalid offset or size")
+
     # Adds new entry in inode table and returns inode number upon success
     def add_inode_table_entry(self, inode):
-        print("Inode Table: " + str(self.inode_table))
         for i in range(0 , MAX_NUM_INODES):
-            print("i is " + str(i))
             if self.inode_table[i] is None:
                 self.inode_table[i] = inode
                 return i

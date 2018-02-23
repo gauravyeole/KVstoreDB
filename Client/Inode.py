@@ -14,7 +14,7 @@ class Inode():
         self.time_accessed = datetime.datetime.now()
         self.time_modified = datetime.datetime.now()
         # self.path = path
-        self.blk_numbers = list() # list of block numbers of data
+        self.blk_numbers = dict() # list of block numbers of data
         self.size = 0
         self.no_links = 2
         self.type = type # 0 - file, and 1 - directory
@@ -27,7 +27,7 @@ class Inode():
 
     # Returns the block number of the indexth block of file
     def index_to_block_number(self, index):
-        return self.blk_numbers[index]
+        return self.blk_numbers[int(index)]
 
     # Returns the blk_number from offset
     def offset_to_blk_num(self, offset):

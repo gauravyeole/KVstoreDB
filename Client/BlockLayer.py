@@ -15,6 +15,13 @@ class BlockLayer:
         # 0 - blk does not contains valid data
         # 1 - blk contains valid data
 
+    def __str__(self):
+        string = ""
+        for i in range(0, self.number_of_blks):
+            string = string  + str(i) + ": "  + \
+                     str(self.disk.get(i)) + "; "
+        return "Blocks: " + string
+
     def blk_number_to_data(self, blk_number):
         return self.disk.get(blk_number)
 

@@ -25,8 +25,6 @@ class PathNameLayer():
     def __init__(self):
         self.file_name_layer = FileNameLayer()
         self.inode_table = self.file_name_layer.inode_table
-        self.blocks = self.file_name_layer.blocks
-
 
     def path_to_inode_number(self, path, dir):
         if dir is None:
@@ -44,4 +42,7 @@ class PathNameLayer():
 
     def write_to_file(self, inode_number, offset, data):
         return self.file_name_layer.write_to_file(inode_number, offset, data)
+
+    def read_file(self, inode_number, offset, size):
+        return self.file_name_layer.read_file(inode_number, offset, size)
 
