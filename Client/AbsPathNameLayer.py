@@ -3,6 +3,7 @@
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 import copy
 
+from Client.Inode import Inode
 from Client.PathNameLayer import PathNameLayer, get_parent
 
 
@@ -49,6 +50,20 @@ class AbsPathNameLayer():
         inode_number = self.abs_path_to_inode_number(abs_path)
         return self.path_name_layer.read_file(inode_number, offset, size)
 
+    def add_new_inode(self, path, type):
+        if type is 1:
+            new_inode = Inode(1)
+        else:
+            new_inode = Inode(0)
+        new_inode_number = self.add_inode_table_entry(new_inode)
+        if new_inode is not -1:
+            parent_path = get_parent(path)
+            parent_inode = self.abs_path_to_inode(parent_path)
+            if parent_inode is not None:
+                return parent_inode.add_child(path.split('/')[-1], new_inode_number)
+        print("New Directory cannot be created. File System Full!!!")
+        return False
+
     def remove_file(self, abs_path):
         parent_path = get_parent(abs_path)
         inode_number = self.abs_path_to_inode_number(abs_path)
@@ -73,6 +88,16 @@ class AbsPathNameLayer():
         parent_inode.remove_child(abs_path.split('/')[-1])
         return
 
+    def rename(self, abs_path, new_name):
+        try:
+            parent_path = get_parent(abs_path)
+            parent_inode = self.abs_path_to_inode(parent_path)
+            parent_inode.remove_child(abs_path.split('/')[-1])
+            parent_inode.add_child(new_name)
+            return True
+        except:
+            print("Unable to rename!!")
+            return False
 
 
 

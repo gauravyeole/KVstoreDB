@@ -1,5 +1,5 @@
 # File Name Layer implementation -  maps filenames with the inode numbers
-# implements recurssive lookups for inode
+# implements recurssive lookups for inodes
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 from Client.InodeNumberLayer import InodeNumberLayer
