@@ -1,7 +1,6 @@
 # Sample User Client-side Application utilizing the Server API
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
-from Client.FileStore import FileStore
 from Client.FileSystem import FileSystem
 
 
@@ -13,7 +12,7 @@ def main():
     myFileSystem.create("/xyz")
     myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 0)
     myFileSystem.write("/xyz", "this is my test data, dnsjfndddnddfmndnfmfmsdnfmnds ", 5)
-    data = myFileSystem.rmdir("/abc")
+    data = myFileSystem.rename("/abc", "lmn")
     print(data)
     # print("create test: " + str(myFileSystem.mkdir("/xyz.txt")))
     file_name = "test.txt"

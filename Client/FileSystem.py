@@ -31,7 +31,7 @@ class FileSystem():
 
     # arguments: path of existing file/directory and its new name
     def rename(self, path, new_name):
-        pass
+        return self.file_system.rename(path, new_name)
 
     def link(self, source, destination):
         pass

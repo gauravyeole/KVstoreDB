@@ -92,8 +92,9 @@ class AbsPathNameLayer():
         try:
             parent_path = get_parent(abs_path)
             parent_inode = self.abs_path_to_inode(parent_path)
+            inode_number = self.abs_path_to_inode_number(abs_path)
             parent_inode.remove_child(abs_path.split('/')[-1])
-            parent_inode.add_child(new_name)
+            parent_inode.add_child(new_name, inode_number)
             return True
         except:
             print("Unable to rename!!")

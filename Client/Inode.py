@@ -13,7 +13,6 @@ class Inode():
         self.time_created = datetime.datetime.now()
         self.time_accessed = datetime.datetime.now()
         self.time_modified = datetime.datetime.now()
-        # self.path = path
         self.blk_numbers = dict() # list of block numbers of data
         self.size = 0
         self.no_links = 2
@@ -37,6 +36,8 @@ class Inode():
 
     # Returns true if child is sucessfully added
     def add_child(self, filename, inode_number):
+        self.time_modified = datetime.datetime.now()
+        self.time_accessed = datetime.datetime.now()
         if filename in self.directory:
             print("File/Directory already Exists!!!")
             return False
@@ -44,6 +45,8 @@ class Inode():
         return True
 
     def remove_child(self, filename):
+        self.time_modified = datetime.datetime.now()
+        self.time_accessed = datetime.datetime.now()
         if filename not in self.directory:
             print("File/Directory does not exist")
             return False
@@ -51,6 +54,8 @@ class Inode():
         return True
 
     def update_blk_number(self, blk_index, blk_number):
+        self.time_modified = datetime.datetime.now()
+        self.time_accessed = datetime.datetime.now()
         self.blk_numbers[blk_index] = blk_number
 
     def get_attributes(self):
@@ -61,6 +66,7 @@ class Inode():
         return attr
 
     def get_children(self):
+        self.time_accessed = datetime.datetime.now()
         return self.directory
 
 
