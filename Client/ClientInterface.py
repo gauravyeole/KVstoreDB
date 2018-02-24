@@ -1,7 +1,6 @@
 # Key-Value database server network interface
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
-import base64
-import pickle
+
 import xmlrpc
 from xmlrpc.client import Binary
 

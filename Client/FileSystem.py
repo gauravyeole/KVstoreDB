@@ -4,7 +4,6 @@
 from Client.AbsPathNameLayer import AbsPathNameLayer
 
 
-#TODO: update timestamps
 class FileSystem():
 
     def __init__(self):

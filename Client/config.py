@@ -1,4 +1,4 @@
-# Configuration FIle
+# File system Configuration FIle
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 MAX_BLK_SIZE = 8
