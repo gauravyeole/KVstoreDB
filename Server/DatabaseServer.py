@@ -1,7 +1,7 @@
 # Server Network Interface
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+
 import getopt
-from xmlrpc.client import Binary
 from xmlrpc.server import SimpleXMLRPCServer
 
 import sys
@@ -19,10 +19,10 @@ class Server:
 
     def get(self, key):
         rv = {}
-        key = key.data
+        key = key
         val = self.database.get(key)
         if val is not None:
-            rv = Binary(val)
+            rv = val
         return rv
 
     def put(self, key, val):
@@ -31,6 +31,8 @@ class Server:
     def delete(self, key):
         return self.database.delete(key)
 
+    def reset_storage(self):
+        return self.database.reset_storage()
 
 def main():
     optlist, args = getopt.getopt(sys.argv[1:], "", "port=")
@@ -52,6 +54,7 @@ def serve(port):
     server.register_function(database.get)
     server.register_function(database.put)
     server.register_function(database.delete)
+    server.register_function(database.reset_storage)
     server.serve_forever()
 
 if __name__ == "__main__":

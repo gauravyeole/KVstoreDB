@@ -1,7 +1,7 @@
 # Block-layer of the file system
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+from Client.ClientInterface import KVstore
 
-from Server.KVstore import KVstore
 
 class BlockLayer:
 
