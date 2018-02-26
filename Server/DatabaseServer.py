@@ -34,6 +34,12 @@ class Server:
     def reset_storage(self):
         return self.database.reset_storage()
 
+    def checkpoint(self, ckpfile):
+        return self.database.checkpoint(ckpfile)
+
+    def restore_checkpoint(self, ckpfile):
+        return self.database.restore(ckpfile)
+
 def main():
     optlist, args = getopt.getopt(sys.argv[1:], "", "port=")
     ol = {}
@@ -55,6 +61,8 @@ def serve(port):
     server.register_function(database.put)
     server.register_function(database.delete)
     server.register_function(database.reset_storage)
+    server.register_function(database.checkpoint)
+    server.register_function(database.restore_checkpoint)
     server.serve_forever()
 
 if __name__ == "__main__":

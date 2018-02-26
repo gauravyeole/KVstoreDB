@@ -1,5 +1,6 @@
 # Key-Value database get, put and delete implementation
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+import shelve
 
 from Server.DataBaseAbstract import DataBaseAbstract
 
@@ -29,3 +30,28 @@ class KVstore(DataBaseAbstract):
 
     def count(self):
         return len(self.kvstore)
+
+    def checkpoint(self, ckpfile):
+        persistent_file = shelve.open(ckpfile)
+        try:
+            persistent_file["kvstore"] = self.kvstore
+            print("checkpoint: " + ckpfile + " created")
+        except:
+            print("Checkpoint cannot be created! ")
+            return -1
+        finally:
+            persistent_file.close()
+        return 0
+
+    def restore(self, ckpfile):
+        persistent_file = shelve.open(ckpfile)
+        try:
+            self.kvstore = persistent_file["kvstore"]
+            print("checkpoint: " + ckpfile + " restored")
+        except:
+            print("checkpoint: " + ckpfile + " not found!")
+            return -1
+        finally:
+            persistent_file.close()
+        return 0
+

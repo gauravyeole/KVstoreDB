@@ -27,3 +27,9 @@ class KVstore:
 
     def count(self):
         return self.server.count()
+
+    def checkpoint(self, ckpfile):
+        return self.server.checkpoint(ckpfile)
+
+    def restore(self, ckpfile):
+        return self.server.restore_checkpoint(ckpfile)
