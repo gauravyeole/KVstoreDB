@@ -52,3 +52,9 @@ class PathNameLayer():
     def remove_file(self, inode_number):
         return self.file_name_layer.remove_file(inode_number)
 
+    def checkpoint(self, ckpfile):
+        return self.file_name_layer.checkpoint(ckpfile)
+
+    def restore(self, ckpfile):
+        return self.file_name_layer.restore(ckpfile)
+

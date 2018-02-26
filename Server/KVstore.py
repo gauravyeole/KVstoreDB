@@ -1,6 +1,8 @@
 # Key-Value database get, put and delete implementation
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+
 import shelve
+import os
 
 from Server.DataBaseAbstract import DataBaseAbstract
 
@@ -9,6 +11,9 @@ class KVstore(DataBaseAbstract):
 
     def __init__(self):
         self.kvstore = dict()
+
+    def __str__(self):
+        return str(self.kvstore)
 
     def reset_storage(self):
         self.kvstore = dict()
@@ -44,6 +49,10 @@ class KVstore(DataBaseAbstract):
         return 0
 
     def restore(self, ckpfile):
+        print("restore before if: " + str(self))
+        if ckpfile + ".db" in os.listdir():
+            self.kvstore = dict()
+            print("restore should be clean: "+ str(self))
         persistent_file = shelve.open(ckpfile)
         try:
             self.kvstore = persistent_file["kvstore"]

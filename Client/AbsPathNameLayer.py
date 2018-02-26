@@ -100,6 +100,8 @@ class AbsPathNameLayer():
             print("Unable to rename!!")
             return False
 
+    def checkpoint(self, ckpfile):
+        return self.path_name_layer.checkpoint(ckpfile)
 
-
-
+    def restore(self, ckpfile):
+        return self.path_name_layer.restore(ckpfile)

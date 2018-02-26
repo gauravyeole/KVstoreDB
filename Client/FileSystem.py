@@ -37,3 +37,11 @@ class FileSystem():
 
     def unlink(self, path):
         pass
+
+    #TODO: create checkppint of InodeData
+    def create_checkpoint(self, ckpfile):
+        return self.file_system.checkpoint(ckpfile)
+
+    #TODO: create restore mechanism of Inodedata
+    def restore_checkpoint(self, ckpfile):
+        return self.file_system.restore(ckpfile)

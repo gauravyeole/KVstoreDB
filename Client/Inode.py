@@ -26,11 +26,15 @@ class Inode():
 
     # Returns the block number of the indexth block of file
     def index_to_block_number(self, index):
-        return self.blk_numbers[int(index)]
+        try:
+            return self.blk_numbers[int(index)]
+        except KeyError:
+            print("Index " + str(index) + "does not exixst")
+            return -1
 
     # Returns the blk_number from offset
     def offset_to_blk_num(self, offset):
-        index = offset/MAX_BLK_SIZE
+        index = int(offset/MAX_BLK_SIZE)
         blk_num = self.index_to_block_number(index)
         return blk_num
 

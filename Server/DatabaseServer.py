@@ -37,7 +37,7 @@ class Server:
     def checkpoint(self, ckpfile):
         return self.database.checkpoint(ckpfile)
 
-    def restore_checkpoint(self, ckpfile):
+    def restore(self, ckpfile):
         return self.database.restore(ckpfile)
 
 def main():
@@ -62,7 +62,7 @@ def serve(port):
     server.register_function(database.delete)
     server.register_function(database.reset_storage)
     server.register_function(database.checkpoint)
-    server.register_function(database.restore_checkpoint)
+    server.register_function(database.restore)
     server.serve_forever()
 
 if __name__ == "__main__":

@@ -45,7 +45,11 @@ class InodeNumberLayer:
 
     def offset_to_blk_data(self, offset, inode): # inode_to_blk
         blk_num = inode.offset_to_blk_num(offset)
-        return self.blocks.blk_number_to_data(blk_num)
+        if blk_num > 0:
+            return self.blocks.blk_number_to_data(blk_num)
+        else:
+            print("InodeNumberLayer: Invalid Offset!")
+        return -1
 
     # def blk_number_to_blk_data(self, blk_number):
     #     return self.blocks.blk_number_to_data(blk_number)
@@ -60,8 +64,11 @@ class InodeNumberLayer:
             else:
                 last_blk_index = int(offset/MAX_BLK_SIZE)
                 last_blk_data = self.offset_to_blk_data(offset, inode)
+                if last_blk_data == -1:
+                    return False
                 for i in range(last_blk_index, len(inode.blk_numbers)):
                     self.blocks.invalid_blk(inode.blk_numbers.pop(i))
+                print("DEBUG: last_blk_data: " + last_blk_data)
                 last_blk_data = last_blk_data[:offset%MAX_BLK_SIZE] + \
                                 data[:MAX_BLK_SIZE-offset%MAX_BLK_SIZE]
                 data = last_blk_data + data[MAX_BLK_SIZE-offset%MAX_BLK_SIZE:]
@@ -112,3 +119,9 @@ class InodeNumberLayer:
             self.blocks.invalid_blk(val)
         self.remove_inode_table_entry(inode_number)
         return True
+
+    def checkpoint(self, ckpfile):
+        return self.blocks.checkpoint(ckpfile)
+
+    def restore(self, ckpfile):
+        return self.blocks.restore(ckpfile)

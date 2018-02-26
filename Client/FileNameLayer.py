@@ -40,3 +40,9 @@ class FileNameLayer():
 
     def remove_file(self, inode_number):
         return self.inode_number_layer.remove_file(inode_number)
+
+    def checkpoint(self, ckpfile):
+        return self.inode_number_layer.checkpoint(ckpfile)
+
+    def restore(self, ckpfile):
+        return self.inode_number_layer.restore(ckpfile)

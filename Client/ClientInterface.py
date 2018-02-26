@@ -32,4 +32,4 @@ class KVstore:
         return self.server.checkpoint(ckpfile)
 
     def restore(self, ckpfile):
-        return self.server.restore_checkpoint(ckpfile)
+        return self.server.restore(ckpfile)

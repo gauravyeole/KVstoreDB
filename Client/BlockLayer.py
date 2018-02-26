@@ -42,3 +42,9 @@ class BlockLayer:
 
     def validate_blk(self, blk_number):
         self.valid_blks[blk_number] = 1
+
+    def checkpoint(self, ckpfile):
+        return self.disk.checkpoint(ckpfile)
+
+    def restore(self, ckpfile):
+        return self.disk.restore(ckpfile)
