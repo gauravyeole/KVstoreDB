@@ -105,3 +105,9 @@ class AbsPathNameLayer():
 
     def restore(self, ckpfile):
         return self.path_name_layer.restore(ckpfile)
+
+    def import_superblk(self):
+        return self.path_name_layer.import_superblk()
+
+    def export_superblk(self):
+        return self.path_name_layer.export_superblk()

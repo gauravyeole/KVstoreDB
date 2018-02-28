@@ -14,8 +14,8 @@ class InodeNumberLayer:
 
     # InodeTable contains dictionary of all the inodes indexed by inode numbers and mapping to corresponding inode object
     def __init__(self):
-        self.inode_table = dict()
-        self.blocks = BlockLayer(num_of_blks)
+        self.blocks = BlockLayer()
+        self.inode_table = self.blocks.inode_table
         for i in range(0, MAX_NUM_INODES):
             self.inode_table[i] = None
         root = Inode(1)
@@ -125,3 +125,9 @@ class InodeNumberLayer:
 
     def restore(self, ckpfile):
         return self.blocks.restore(ckpfile)
+
+    def import_superblk(self):
+        return self.blocks.import_superblk()
+
+    def export_superblk(self):
+        return self.blocks.export_superblk()

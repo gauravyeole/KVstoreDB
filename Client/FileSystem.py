@@ -1,4 +1,4 @@
-# Custom hierarchiecal File System Interface akin to UNIX file system
+# Custom hierarchical File System Interface akin to UNIX file system
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
 
 from Client.AbsPathNameLayer import AbsPathNameLayer
@@ -10,27 +10,55 @@ class FileSystem():
         self.file_system = AbsPathNameLayer()
 
     def mkdir(self, path):
-        return self.file_system.add_new_inode(path, 1)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.add_new_inode(path, 1)
+        self.file_system.export_superblk()
+        return rv
 
     def create(self, path):
-        return self.file_system.add_new_inode(path, 0)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.add_new_inode(path, 0)
+        self.file_system.export_superblk()
+        return rv
 
     # returns true if file is written successfully
     def write(self, path, data, offset=0):
-        return self.file_system.write_to_file(path, offset, data)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.write_to_file(path, offset, data)
+        self.file_system.export_superblk()
+        return rv
 
     def read(self, abs_path, offset=0, size=-1):
-        return self.file_system.read_file(abs_path, offset, size)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.read_file(abs_path, offset, size)
+        self.file_system.export_superblk()
+        return rv
 
     def rmdir(self, path):
-        return self.file_system.remove_dir(path)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.remove_dir(path)
+        self.file_system.export_superblk()
+        return rv
 
     def remove(self, path):
-        return self.file_system.remove_file(path)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.remove_file(path)
+        self.file_system.export_superblk()
+        return rv
 
     # arguments: path of existing file/directory and its new name
     def rename(self, path, new_name):
-        return self.file_system.rename(path, new_name)
+        rv = False
+        if self.file_system.import_superblk() is True:
+            rv = self.file_system.rename(path, new_name)
+        self.file_system.export_superblk()
+        return rv
 
     def link(self, source, destination):
         pass
@@ -38,10 +66,8 @@ class FileSystem():
     def unlink(self, path):
         pass
 
-    #TODO: create checkppint of InodeData
     def create_checkpoint(self, ckpfile):
         return self.file_system.checkpoint(ckpfile)
 
-    #TODO: create restore mechanism of Inodedata
     def restore_checkpoint(self, ckpfile):
         return self.file_system.restore(ckpfile)

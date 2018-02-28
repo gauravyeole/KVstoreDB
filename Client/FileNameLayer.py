@@ -46,3 +46,9 @@ class FileNameLayer():
 
     def restore(self, ckpfile):
         return self.inode_number_layer.restore(ckpfile)
+
+    def import_superblk(self):
+        return self.inode_number_layer.import_superblk()
+
+    def export_superblk(self):
+        return self.inode_number_layer.export_superblk()
