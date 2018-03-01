@@ -11,13 +11,13 @@ class AbsPathNameLayer():
 
     def __init__(self):
         self.path_name_layer = PathNameLayer()
-        self.inode_table = self.path_name_layer.inode_table
+        # self.inode_table = self.path_name_layer.inode_table
 
-    def __str__(self):
-        string = ""
-        for inode in self.inode_table:
-            string = string + "[" + str(inode) + ": " + str(self.inode_table[inode]) + "]; "
-        return string
+    # def __str__(self):
+    #     string = ""
+    #     for inode in self.inode_table:
+    #         string = string + "[" + str(inode) + ": " + str(self.inode_table[inode]) + "]; "
+    #     return string
 
     # wd is inode number of working directory
     def abs_path_to_inode_number(self, path, wd=0):
@@ -29,10 +29,10 @@ class AbsPathNameLayer():
 
     def abs_path_to_inode(self, path):
         if path is "/":
-            return self.inode_table[0]
+            return self.path_name_layer.inode_number_to_inode(0)
         inode_number = self.abs_path_to_inode_number(path)
         if inode_number is not None:
-            return self.inode_table[inode_number]
+            return self.path_name_layer.inode_number_to_inode(inode_number)
         return None
 
     def add_inode_table_entry(self, inode):
@@ -60,9 +60,15 @@ class AbsPathNameLayer():
             parent_path = get_parent(path)
             parent_inode = self.abs_path_to_inode(parent_path)
             if parent_inode is not None:
-                return parent_inode.add_child(path.split('/')[-1], new_inode_number)
+                if parent_inode.add_child(path.split('/')[-1], \
+                                              new_inode_number):
+                    return True
+                else:
+                    self.remove_inode_table_entry(new_inode_number)
+                    return False
         print("New Directory cannot be created. File System Full!!!")
         return False
+
 
     def remove_file(self, abs_path):
         parent_path = get_parent(abs_path)
@@ -79,12 +85,12 @@ class AbsPathNameLayer():
         parent_inode = self.abs_path_to_inode(parent_path)
         children = copy.deepcopy(inode.get_children())
         for k, val in children.items():
-            child_inode = self.inode_table[val]
+            child_inode = self.path_name_layer.inode_number_to_inode(val)
             if child_inode.type is 0:
                 self.remove_file(abs_path + "/" + k)
             else:
                 self.remove_dir(abs_path + "/" + k)
-        self.inode_table[inode_number] = None
+        self.path_name_layer.remove_inode_table_entry(inode_number)
         parent_inode.remove_child(abs_path.split('/')[-1])
         return
 

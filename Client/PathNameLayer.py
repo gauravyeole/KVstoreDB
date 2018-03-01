@@ -24,7 +24,7 @@ class PathNameLayer():
 
     def __init__(self):
         self.file_name_layer = FileNameLayer()
-        self.inode_table = self.file_name_layer.inode_table
+        # self.inode_table = self.file_name_layer.inode_table
 
     def path_to_inode_number(self, path, dir):
         if dir is None:
@@ -39,6 +39,9 @@ class PathNameLayer():
 
     def add_inode_table_entry(self, inode):
         return self.file_name_layer.add_inode_table_entry(inode)
+
+    def inode_number_to_inode(self, inode_number):
+        return self.file_name_layer.inode_number_to_inode(inode_number)
 
     def remove_inode_table_entry(self, inode_number):
         return self.file_name_layer.remove_inode_table_entry(inode_number)

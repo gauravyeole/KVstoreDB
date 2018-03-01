@@ -1,5 +1,7 @@
 # Block-layer of the file system
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+import pickle
+from xmlrpc.client import Binary
 
 from Client import config
 from Client.ClientInterface import KVstore
@@ -15,24 +17,16 @@ class BlockLayer:
         self.disk = KVstore()
         # self.valid_blks = dict()
         self.number_of_blks = NUM_OF_BLKS
-
+        self.valid_blks = dict()
         try:
-            self.valid_blks = self.disk.get("valid_blks")
-            self.inode_table = self.disk.get("inode_table")
+            self.valid_blks = pickle.loads(self.disk.get("valid_blks").data)
         except:
-            self.valid_blks = dict()
-            self.inode_table = dict()
             for i in range(0, self.number_of_blks):
                 self.disk.put(i, None)
                 self.valid_blks[i] = 0
             # 0 - blk does not contains valid data
             # 1 - blk contains valid data
-            for i in range(0, MAX_NUM_INODES):
-                self.inode_table[i] = None
-            root = Inode(1)
-            self.inode_table[0] = root
-            self.disk.put("valid_blks", self.valid_blks)
-            self.disk.put("inode_table", self.inode_table)
+        self.disk.put("valid_blks", Binary(pickle.dumps(self.valid_blks)))
         print("Block Layer Initialised")
 
     def __str__(self):
@@ -42,18 +36,26 @@ class BlockLayer:
                      str(self.disk.get(i)) + "; "
         return "Blocks: " + string
 
-    def import_superblk(self):
+    def import_inode_table(self):
         try:
-            self.valid_blks = self.disk.get("valid_blks")
-            self.inode_table = self.disk.get("inode_table")
+            return pickle.loads(self.disk.get("inode_table").data)
+        except:
+            print("Error in importing inode table")
+            return None
+
+    def export_inode_table(self, inode_table):
+        self.disk.put("inode_table", Binary(pickle.dumps(inode_table)))
+
+    def import_valid_blk(self):
+        try:
+            self.valid_blks = pickle.loads(self.disk.get("valid_blks").data)
             return True
         except:
             print("Error in importing the SuperBlock")
             return False
 
-    def export_superblk(self):
-        self.disk.put("valid_blks", self.valid_blks)
-        self.disk.put("inode_table", self.inode_table)
+    def export_valid_blk(self):
+        self.disk.put("valid_blks", Binary(pickle.dumps(self.valid_blks)))
 
     def blk_number_to_data(self, blk_number):
         return self.disk.get(blk_number)

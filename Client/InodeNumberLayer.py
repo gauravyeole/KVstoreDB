@@ -15,11 +15,15 @@ class InodeNumberLayer:
     # InodeTable contains dictionary of all the inodes indexed by inode numbers and mapping to corresponding inode object
     def __init__(self):
         self.blocks = BlockLayer()
-        self.inode_table = self.blocks.inode_table
-        for i in range(0, MAX_NUM_INODES):
-            self.inode_table[i] = None
-        root = Inode(1)
-        self.inode_table[0] = root
+        self.inode_table = self.blocks.import_inode_table()
+        if self.inode_table is None:
+            self.inode_table = dict()
+            for i in range(0, MAX_NUM_INODES):
+                self.inode_table[i] = None
+            root = Inode(1)
+            self.inode_table[0] = root
+        self.blocks.export_inode_table(self.inode_table)
+        print("Inode Table Layer Initialised")
 
     def __str__(self):
         string = ""
@@ -124,10 +128,17 @@ class InodeNumberLayer:
         return self.blocks.checkpoint(ckpfile)
 
     def restore(self, ckpfile):
-        return self.blocks.restore(ckpfile)
+        if self.blocks.restore(ckpfile) is 0 and self.import_superblk() is True:
+            return True
+        return False
 
     def import_superblk(self):
-        return self.blocks.import_superblk()
+        inode_table =  self.blocks.import_inode_table()
+        if inode_table is not None:
+            self.inode_table = inode_table
+            return self.blocks.import_valid_blk()
+        return False
 
     def export_superblk(self):
-        return self.blocks.export_superblk()
+        self.blocks.export_inode_table(self.inode_table)
+        return self.blocks.export_valid_blk()
