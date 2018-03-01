@@ -8,7 +8,8 @@ from xmlrpc.client import Binary
 class KVstore:
 
     def __init__(self):
-        self.server = xmlrpc.client.ServerProxy("http://localhost:12345", allow_none=True)
+        self.server = xmlrpc.client.ServerProxy("http://localhost:12345", \
+                                                allow_none=True)
         print("INIT called")
 
     def reset_storage(self):
@@ -33,3 +34,9 @@ class KVstore:
 
     def restore(self, ckpfile):
         return self.server.restore(ckpfile)
+
+    def aquire(self, key):
+        return self.server.aquire(key)
+
+    def release(self, key):
+        return self.server.release(key)

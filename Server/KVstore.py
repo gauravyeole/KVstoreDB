@@ -4,6 +4,8 @@
 import shelve
 import os
 
+from multiprocessing import Lock
+
 from Server.DataBaseAbstract import DataBaseAbstract
 
 
@@ -11,6 +13,8 @@ class KVstore(DataBaseAbstract):
 
     def __init__(self):
         self.kvstore = dict()
+        self.locks = dict()
+        # dictionary of locks indexed by key
 
     def __str__(self):
         return str(self.kvstore)
@@ -19,6 +23,8 @@ class KVstore(DataBaseAbstract):
         self.kvstore = dict()
 
     def put(self, key, value):
+        if key not in self.locks:
+            self.locks = Lock()
         self.kvstore[key] = value
         if self.kvstore[key] is None:
             return False
@@ -64,3 +70,20 @@ class KVstore(DataBaseAbstract):
             persistent_file.close()
         return 0
 
+    def aquire(self, key):
+        try:
+            lock = self.locks[key]
+            lock.aquire()
+            return True
+        except KeyError:
+            print("Can not aquire lock for key: " + str(key))
+            return False
+
+    def release(self, key):
+        try:
+            lock = self.locks[key]
+            lock.release()
+            return True
+        except KeyError:
+            print("Can not release lock for key: " + str(key))
+            return False

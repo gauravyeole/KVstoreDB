@@ -24,7 +24,6 @@ class PathNameLayer():
 
     def __init__(self):
         self.file_name_layer = FileNameLayer()
-        # self.inode_table = self.file_name_layer.inode_table
 
     def path_to_inode_number(self, path, dir):
         if dir is None:
@@ -67,3 +66,8 @@ class PathNameLayer():
     def export_superblk(self):
         return self.file_name_layer.export_superblk()
 
+    def aquire(self, inode_number):
+        return self.file_name_layer.aquire(inode_number)
+
+    def release(self, inode_number):
+        return self.file_name_layer.release(inode_number)

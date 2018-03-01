@@ -10,7 +10,6 @@ class FileNameLayer():
 
     def __init__(self):
         self.inode_number_layer = InodeNumberLayer()
-        # self.inode_table = self.inode_number_layer.inode_table
 
     #lookup returns the inode number
     def lookup(self, filename, dir): # dir is inode number of the directory
@@ -55,3 +54,9 @@ class FileNameLayer():
 
     def export_superblk(self):
         return self.inode_number_layer.export_superblk()
+
+    def aquire(self, inode_number):
+        return self.inode_number_layer.aquire(inode_number)
+
+    def release(self, inode_number):
+        return self.inode_number_layer.release(inode_number)

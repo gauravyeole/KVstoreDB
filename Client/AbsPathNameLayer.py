@@ -11,13 +11,6 @@ class AbsPathNameLayer():
 
     def __init__(self):
         self.path_name_layer = PathNameLayer()
-        # self.inode_table = self.path_name_layer.inode_table
-
-    # def __str__(self):
-    #     string = ""
-    #     for inode in self.inode_table:
-    #         string = string + "[" + str(inode) + ": " + str(self.inode_table[inode]) + "]; "
-    #     return string
 
     # wd is inode number of working directory
     def abs_path_to_inode_number(self, path, wd=0):
@@ -117,3 +110,11 @@ class AbsPathNameLayer():
 
     def export_superblk(self):
         return self.path_name_layer.export_superblk()
+
+    def aquire(self, path):
+        inode_number = self.abs_path_to_inode_number(path)
+        return self.path_name_layer.aquire(inode_number)
+
+    def release(self, path):
+        inode_number = self.abs_path_to_inode_number(path)
+        return self.path_name_layer.release(inode_number)

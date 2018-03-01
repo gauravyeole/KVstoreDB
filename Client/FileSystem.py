@@ -71,3 +71,9 @@ class FileSystem():
 
     def restore_checkpoint(self, ckpfile):
         return self.file_system.restore(ckpfile)
+
+    def aquire(self, path):
+        return self.file_system.aquire(path)
+
+    def release(self, path):
+        return self.file_system.release(path)

@@ -12,7 +12,8 @@ num_of_blks = config.NUM_OF_BLKS
 
 class InodeNumberLayer:
 
-    # InodeTable contains dictionary of all the inodes indexed by inode numbers and mapping to corresponding inode object
+    # InodeTable contains dictionary of all the inodes indexed by inode numbers
+    # and mapping to corresponding inode object
     def __init__(self):
         self.blocks = BlockLayer()
         self.inode_table = self.blocks.import_inode_table()
@@ -142,3 +143,33 @@ class InodeNumberLayer:
     def export_superblk(self):
         self.blocks.export_inode_table(self.inode_table)
         return self.blocks.export_valid_blk()
+
+    def aquire(self, inode_number):
+        inode = self.inode_number_to_inode(inode_number)
+        try:
+            if inode.type is 0:
+                for k, v in inode.blk_numbers.items():
+                    self.blocks.aquire(v)
+            else:
+                children = inode.get_children()
+                for k, v in children.items():
+                    self.aquire(v)
+            return True
+        except:
+            print("Inode Number: " + str(inode_number) + " cannot aquire lock!")
+            return False
+
+    def release(self, inode_number):
+        inode = self.inode_number_to_inode(inode_number)
+        try:
+            if inode.type is 0:
+                for k, v in inode.blk_numbers.items():
+                    self.blocks.release(v)
+            else:
+                children = inode.get_children()
+                for k, v in children.items():
+                    self.release(v)
+            return True
+        except:
+            print("Inode Number: " + str(inode_number) + " cannot release lock!")
+            return False

@@ -1,11 +1,11 @@
 # Block-layer of the file system
 # @author: Gaurav Yeole <gauravyeole@gmail.com>
+
 import pickle
 from xmlrpc.client import Binary
 
 from Client import config
 from Client.ClientInterface import KVstore
-from Client.Inode import Inode
 
 MAX_NUM_INODES = config.MAX_NUM_INODES
 MAX_BLK_SIZE = config.MAX_BLK_SIZE
@@ -84,3 +84,9 @@ class BlockLayer:
 
     def restore(self, ckpfile):
         return self.disk.restore(ckpfile)
+
+    def aquire(self, blk_number):
+        return self.disk.aquire(blk_number)
+
+    def release(self, blk_number):
+        return self.disk.release(blk_number)

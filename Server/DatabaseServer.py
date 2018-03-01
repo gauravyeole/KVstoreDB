@@ -40,6 +40,12 @@ class Server:
     def restore(self, ckpfile):
         return self.database.restore(ckpfile)
 
+    def aquire(self, key):
+        return self.database.aquire(key)
+
+    def release(self, key):
+        return self.database.release(key)
+
 def main():
     optlist, args = getopt.getopt(sys.argv[1:], "", "port=")
     ol = {}
@@ -63,6 +69,8 @@ def serve(port):
     server.register_function(database.reset_storage)
     server.register_function(database.checkpoint)
     server.register_function(database.restore)
+    server.register_function(database.aquire)
+    server.register_function(database.release)
     server.serve_forever()
 
 if __name__ == "__main__":

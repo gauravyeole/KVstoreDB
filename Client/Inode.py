@@ -17,12 +17,15 @@ class Inode():
         self.size = 0
         self.no_links = 2
         self.type = type # 0 - file, and 1 - directory
-        self.directory = dict() # directory is dictionary indexed by file name and mapping to inode number
+        self.directory = dict()
+        # directory is dictionary indexed by file name and mapping to inode number
 
     def __str__(self):
-        return "Type: " + str(self.type) + ", children: " + str(self.directory) + \
-                ", size: " + str(self.size) + ", block numbers: " + str(self.blk_numbers) + \
-               ", links: " + str(self.no_links) + ", time created: " + str(self.time_created)
+        return "Type: " + str(self.type) + ", children: " + \
+               str(self.directory) + ", size: " + str(self.size) \
+               + ", block numbers: " + str(self.blk_numbers) + \
+               ", links: " + str(self.no_links) + ", time created: " \
+               + str(self.time_created)
 
     # Returns the block number of the indexth block of file
     def index_to_block_number(self, index):
@@ -63,18 +66,13 @@ class Inode():
         self.blk_numbers[blk_index] = blk_number
 
     def get_attributes(self):
-        attr = {"type": self.type, "children" : self.directory, "size" : self.size,
-                "block_numbers" : self.blk_numbers, "links" : self.no_links,
-                "time_created" : self.time_created, "time_accessed" : self.time_accessed,
+        attr = {"type": self.type, "children" : self.directory,
+                "size" : self.size, "block_numbers" : self.blk_numbers,
+                "links" : self.no_links, "time_created" : self.time_created,
+                "time_accessed" : self.time_accessed,
                 "time_modified" : self.time_modified}
         return attr
 
     def get_children(self):
         self.time_accessed = datetime.datetime.now()
         return self.directory
-
-
-
-
-
-
